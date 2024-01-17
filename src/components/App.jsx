@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { addContact, removeContact } from '../redux/contactsSlice';
+import { fetchContacts, addContact, deleteContact } from '../redux/operations';
 import { setFilter } from '../redux/filterSlice';
 
 export const App = () => {
-
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const filters = useSelector((state) => state.filters.filters)
-  const contacts = useSelector((state) => state.contacts.contacts)
-  const dispatch = useDispatch()
+  const filters = useSelector((state) => state.filters.filters);
+  const contacts = useSelector((state) => state.contacts.items);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -44,11 +46,11 @@ export const App = () => {
 
   const handleFilterChange = (e) => {
     const { value } = e.target;
-    dispatch(setFilter(value));;
+    dispatch(setFilter(value));
   };
 
   const handleDeleteContact = (contactId) => {
-    dispatch(removeContact(contactId))
+    dispatch(deleteContact(contactId));
   };
 
   const filteredContacts = contacts.filter((contact) =>
