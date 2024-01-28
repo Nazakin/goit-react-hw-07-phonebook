@@ -12,4 +12,3 @@ export const ContactList = ({ contacts, onDeleteContact }) => (
     ))}
   </ul>
 );
-

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
@@ -8,8 +8,6 @@ import { fetchContacts, addContact, deleteContact } from '../redux/operations';
 import { setFilter } from '../redux/filterSlice';
 
 export const App = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
   const filters = useSelector((state) => state.filters.filters);
   const contacts = useSelector((state) => state.contacts.contacts.items);
   const dispatch = useDispatch();
@@ -18,34 +16,19 @@ export const App = () => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const handleChange = (e) => {
-    const { value, name } = e.target;
-    name === 'name' ? setName(value) : setNumber(value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const isNameExist = contacts.some((contact) => contact.name.toLowerCase() === name.toLowerCase());
+  const handleAddContact = (newContact) => {
+    const isNameExist = contacts.some((contact) => contact.name.toLowerCase() === newContact.name.toLowerCase());
 
     if (isNameExist) {
-      alert(`${name} is already in contacts.`);
+      alert(`${newContact.name} is already in contacts.`);
       return;
     }
 
-    const newContact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-
-    dispatch(addContact(newContact));
-    setName('');
-    setNumber('');
+    const contactWithId = { ...newContact, id: nanoid() };
+    dispatch(addContact(contactWithId));
   };
 
-  const handleFilterChange = (e) => {
-    const { value } = e.target;
+  const handleFilterChange = (value) => {
     dispatch(setFilter(value));
   };
 
@@ -53,15 +36,13 @@ export const App = () => {
     dispatch(deleteContact(contactId));
   };
 
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filters.toLowerCase())
-  );
+  const filteredContacts = contacts.filter((contact) => contact.name.toLowerCase().includes(filters.toLowerCase()));
 
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm name={name} number={number} handleChange={handleChange} handleSubmit={handleSubmit} />
-      <Filter filter={filters}  handleFilterChange={handleFilterChange}/>
+      <ContactForm onAddContact={handleAddContact} />
+      <Filter filter={filters} onFilterChange={handleFilterChange} />
       {filteredContacts.length > 0 ? (
         <ContactList contacts={filteredContacts} onDeleteContact={handleDeleteContact} />
       ) : (
