@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from '/Users/nazakin/Documents/GitHub/goit-react-hw-07-phonebook/src/redux/operations'; 
-import { Filter } from '../Filter/Filter';
+import { deleteContact } from '../redux/operations'; 
+import { Filter } from './Filter';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
