@@ -2,8 +2,8 @@ import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 const Contacts = React.lazy(() => import('../pages/Contacts'));
-const RegisterForm = React.lazy(() => import('../pages/Register').then(module => ({ default: module.RegisterForm })));
-const LoginForm = React.lazy(() => import('../pages/Login').then(module => ({ default: module.LoginForm })));
+const RegisterForm = React.lazy(() => import('../pages/Register'));
+const LoginForm = React.lazy(() => import('../pages/Login'));
 
 export const App = () => {
   return (
