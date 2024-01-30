@@ -4,7 +4,7 @@ import { registerUser } from '../redux/operations';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-const RegisterForm = () => {
+export const RegisterForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
   const [name, setName] = useState('');
@@ -68,4 +68,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+

@@ -4,9 +4,7 @@ import { ContactList } from '../components/ContactList';
 import { useDispatch } from 'react-redux';
 import { fetchContacts } from '../redux/operations';
 
-
-
-export const App = () => {
+export const Contacts = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -14,10 +12,10 @@ export const App = () => {
   }, [dispatch]);
 
   return (
-  <div>
+    <div>
       <h1>Phonebook</h1>
       <ContactForm />
-      <ContactList/>
-  </div>
+      <ContactList />
+    </div>
   );
 };

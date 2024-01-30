@@ -4,7 +4,7 @@ import { loginUser } from '../redux/operations';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-const LoginForm = () => {
+export const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
   const [email, setEmail] = useState('');
@@ -60,4 +60,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+
