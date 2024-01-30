@@ -1,8 +1,20 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilter } from '/Users/nazakin/Documents/GitHub/goit-react-hw-07-phonebook/src/redux/filterSlice';
 
-export const Filter = ({ filter, handleFilterChange }) => (
-  <label style={{ display: 'flex', flexDirection: 'column', maxWidth: '150px', marginTop: '20px' }}>
-    Search:
-    <input type="text" name="filter" value={filter} onChange={handleFilterChange} />
-  </label>
-);
+export const Filter = () => {
+  const dispatch = useDispatch();
+  const filters = useSelector((state) => state.filters.filters);
+
+  const handleFilterChange = (e) => {
+    const { value } = e.target;
+    dispatch(setFilter(value));
+  };
+
+  return (
+    <label style={{ display: 'flex', flexDirection: 'column', maxWidth: '150px', marginTop: '20px' }}>
+      Search:
+      <input type="text" name="filter" value={filters} onChange={handleFilterChange} />
+    </label>
+  );
+};
